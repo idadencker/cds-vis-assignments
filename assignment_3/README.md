@@ -28,7 +28,7 @@ To make the program work do the following:
 
 1) clone the repository 
 ```python
-$ git clone "URL HERE"
+$ git clone https://github.com/idadencker/cds-vis-assignments.git
 ```
 2) download the dataset and place the Tobacco3482-jpg folder including the 10 subfolders in 'in'
 3) In a terminal set your directory:

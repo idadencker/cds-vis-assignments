@@ -24,7 +24,7 @@ To make the program work do the following:
 
 1) clone the repository 
 ```python
-$ git clone "URL HERE"
+$ git clone https://github.com/idadencker/cds-vis-assignments.git
 ```
 2) download the images.zip file. Unzip it and place the images folder inclduding the 3 subfolders in the 'in' folder.
 3) In a terminal set your directory:
