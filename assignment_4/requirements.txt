@@ -1,0 +1,7 @@
+torch 
+Pillow
+facenet-pytorch
+pandas
+matplotlib
+seaborn
+tqdm

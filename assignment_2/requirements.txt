@@ -1,0 +1,9 @@
+opencv-python-headless
+numpy
+matplotlib
+tensorflow
+scikit-learn
+tqdm 
+scikit-optimize
+
+
