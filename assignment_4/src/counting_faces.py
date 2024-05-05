@@ -36,14 +36,22 @@ def get_num_faces(file_path):
     return num_faces
 
 
+def df_for_newspaper(perc_pages_with_faces_per_decade, faces_raw_count_per_decade, newspaper_name):
+    '''
+    Create DataFrame for each newspaper by merging 2 dictionaries 
+    '''
+    df = pd.DataFrame.from_dict(perc_pages_with_faces_per_decade, orient='index', columns=['Percentage'])
+    df_2 = pd.DataFrame.from_dict(faces_raw_count_per_decade, orient='index', columns=['count'])
+    done = pd.merge(df, df_2, left_index=True, right_index=True)
+    done['newspaper'] = newspaper_name
+    done.sort_index(axis=0, ascending=True, inplace=True)
+    done.to_csv(f'out/{newspaper_name}_data.csv')
+
+
 def loop_through_files(folderpath): 
-    '''
-    This function loops through all files and extract information
-    '''
+    """ This function loops through all files and extract information """
     for newspaper_folder in sorted(os.listdir(folderpath)):
-        '''
-        Construct the path to the current newspaper 
-        '''
+        """ Construct the path to the current newspaper """
         full_path = os.path.join(folderpath, newspaper_folder)
 
         if os.path.isdir(full_path):
@@ -51,57 +59,45 @@ def loop_through_files(folderpath):
             '''
             Initialize dictionaries for the current newspaper 
             '''
-            pages_per_decade = {}
-            faces_relative_count_per_decade = {}   
-            faces_raw_count_per_decade = {}
-            perc_pages_with_faces_per_decade = {}
+            pages_per_decade, faces_relative_count_per_decade, faces_raw_count_per_decade, perc_pages_with_faces_per_decade = {}, {}, {}, {}
             '''
             Loops through all files for the current newspaper
             '''
-            for filename in tqdm(os.listdir(full_path), desc=newspaper_name):
+            for filename in tqdm(sorted(os.listdir(full_path)), desc=newspaper_name):
                 '''
                 Construct the path to the current file
                 '''
                 file_path = os.path.join(full_path, filename)
                 if os.path.isfile(file_path) and filename.endswith(".jpg"):
                     '''
-                    Extract the decade from the filename and increment the count of pages for the current decade
+                    Extracts the decade from the filename and increment the count of pages for the current decade
                     '''
                     decade = extract_decade(filename)
-
-                    pages_per_decade.setdefault(decade, 0)
-                    pages_per_decade[decade] += 1
+                    pages_per_decade.setdefault(decade, 0) 
+                    pages_per_decade[decade] += 1 
                     '''
-                    Get number of faces and increment the counter if at least one face is detected on this page
+                    Gets the number of faces and fill the dictionaries based on the number of faces
                     '''
                     num_faces = get_num_faces(file_path)
-
                     if num_faces > 0:
                         faces_relative_count_per_decade.setdefault(decade, 0)
                         faces_relative_count_per_decade[decade] += 1
-                        
-                    if num_faces > 0:
                         faces_raw_count_per_decade.setdefault(decade, 0)
                         faces_raw_count_per_decade[decade] += num_faces
 
+                    elif num_faces == 0: 
+                        faces_relative_count_per_decade.setdefault(decade, 0)
+                        faces_relative_count_per_decade[decade] += 0
+                        faces_raw_count_per_decade.setdefault(decade, 0)
+                        faces_raw_count_per_decade[decade] += 0
             '''
-            Calculate the percentage of pages with faces for each decade
+            Calculate the percentage of pages with faces for each decade using the dictionaries. Saves the results in a dataframe
             '''
-            perc_pages_with_faces_per_decade[newspaper_name] = {}
             for decade, page_count in pages_per_decade.items():
-                if page_count > 0:
-                    perc_pages_with_faces_per_decade[newspaper_name][decade] = round((faces_relative_count_per_decade.get(decade, 0) / page_count) * 100, 2)
-                else:
-                    perc_pages_with_faces_per_decade[newspaper_name][decade] = 0
-            '''
-            Create DataFrame from extracted information
-            '''
-            df = pd.DataFrame.from_dict(perc_pages_with_faces_per_decade[newspaper_name], orient='index', columns=['Percentage'])
-            df_2 = pd.DataFrame.from_dict(faces_raw_count_per_decade, orient='index', columns=['count'])
-            done = pd.merge(df, df_2, left_index=True, right_index=True)
-            done['newspaper'] = newspaper_name
-            done.sort_index(axis=0, ascending=True, inplace=True)
-            done.to_csv(f'out/{newspaper_name}_data.csv')
+                perc_pages_with_faces_per_decade[decade] = round((faces_relative_count_per_decade.get(decade, 0) / page_count) * 100, 2)
+
+            df_for_newspaper(perc_pages_with_faces_per_decade, faces_raw_count_per_decade, newspaper_name)
+
 
 
 def merged_df():
