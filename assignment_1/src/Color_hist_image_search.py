@@ -8,7 +8,6 @@ from tqdm import tqdm
 
 
 
-
 def calculate_target_image(filepath_target):
     '''
     Load in image, extract color histogram and normalise the image

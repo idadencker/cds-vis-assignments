@@ -17,6 +17,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
+
 def get_arguments():
     '''
     For getting optimizer for the model
@@ -28,7 +29,9 @@ def get_arguments():
                         required = True,
                         help="The optimizer should be given as a string, and be either adam or sgd" )
     args = parser.parse_args()
+    
     return args
+
 
 
 def load_images(folder_path):
@@ -74,6 +77,7 @@ def prepare_data(X, y):
     lb= LabelBinarizer()
     y_train= lb.fit_transform(y_train) 
     y_test= lb.fit_transform(y_test) 
+    
     return X_train, X_test, y_train, y_test
 
 
@@ -102,6 +106,7 @@ def define_model():
     return model
 
 
+
 def compile_fit_model(model, optimizer, X_train, y_train):
     '''
     Compile and train the model
@@ -123,6 +128,7 @@ def compile_fit_model(model, optimizer, X_train, y_train):
                 batch_size=32,
                 epochs=10,
                 verbose=1)
+    
     return H
 
 
@@ -150,6 +156,7 @@ def plot_history(H, epochs, save_path):
 
     plt.savefig(save_path)
     plt.show()
+
 
 
 def evaluate_model(X_test, y_test, model, H, optimizer):

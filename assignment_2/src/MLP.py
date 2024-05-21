@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import tensorflow
 from tensorflow.keras.datasets import cifar10
 from tqdm import tqdm 
+from sklearn.metrics import classification_report
 
 
 

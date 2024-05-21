@@ -17,6 +17,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
+
 def get_arguments():
     '''
     For getting optimizer for the model
@@ -28,7 +29,9 @@ def get_arguments():
                         required = True,
                         help="The optimizer should be given as a string, and be either adam or sgd" )
     args = parser.parse_args()
+    
     return args
+
 
 
 def load_images(folder_path):
@@ -74,6 +77,7 @@ def prepare_data(X, y):
     lb= LabelBinarizer()
     y_train= lb.fit_transform(y_train) 
     y_test= lb.fit_transform(y_test) 
+    
     return X_train, X_test, y_train, y_test
 
 
@@ -102,6 +106,7 @@ def define_model():
     return model
 
 
+
 def compile_model(model, optimizer):
     '''
     Compile the model
@@ -117,7 +122,10 @@ def compile_model(model, optimizer):
     model.compile(optimizer = optimizer,
                 loss = 'categorical_crossentropy',
                 metrics = ['accuracy'])
+    
     return model 
+
+
 
 def data_generator():
     '''
@@ -126,7 +134,9 @@ def data_generator():
     datagen = ImageDataGenerator(horizontal_flip = True, 
                                 rotation_range = 90,
                                 validation_split = 0.1)
+    
     return datagen
+
 
 
 def fit_model(model, datagen, X_train, y_train):
@@ -141,6 +151,8 @@ def fit_model(model, datagen, X_train, y_train):
                                                               epochs = 10) 
 
     return H
+
+
 
 def plot_history(H, epochs, save_path):
     plt.figure(figsize=(12,6))
@@ -165,6 +177,7 @@ def plot_history(H, epochs, save_path):
 
     plt.savefig(save_path)
     plt.show()
+
 
 
 def evaluate_model(X_test, y_test, model, H, optimizer):
@@ -193,9 +206,9 @@ def main():
     model = define_model()
     model = compile_model(model, args.optimizer)
     datagen= data_generator()
-
     H= fit_model(model, datagen, X_train, y_train)
     evaluate_model(X_test, y_test, model, H, args.optimizer)
+
 
 
 if __name__ == "__main__":

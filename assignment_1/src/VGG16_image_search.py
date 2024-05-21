@@ -144,20 +144,9 @@ def plot(df, filepath_target, filepath_all):
 
 
 def main():
-    filepath_target = os.path.join("..",
-                        "..",
-                        "..",
-                        "..",
-                        "cds-vis-data",
-                        "flowers", 
-                        "image_0001.jpg")
+    filepath_target = os.path.join("in", "image_0001.jpg")
     model = define_model()
-    filepath_all = os.path.join("..", 
-                            "..",
-                            "..",
-                            "..",
-                            "cds-vis-data",
-                            "flowers", )
+    filepath_all = os.path.join("in")
     distances, indices = loop_through_files(filepath_all, model)
     df = save_distances(distances,indices)
     plot(df, filepath_target, filepath_all)

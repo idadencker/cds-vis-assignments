@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
+
 def extract_decade(filename):
     '''
     Extracts the decade using the filename
@@ -18,6 +19,7 @@ def extract_decade(filename):
     year = int(parts[1])
     decade = (year // 10) * 10
     return decade
+
 
 
 def get_num_faces(file_path):
@@ -33,7 +35,9 @@ def get_num_faces(file_path):
         num_faces = boxes.shape[0]  
     else:
         num_faces = 0 
+    
     return num_faces
+
 
 
 def df_for_newspaper(perc_pages_with_faces_per_decade, faces_raw_count_per_decade, newspaper_name):
@@ -46,6 +50,7 @@ def df_for_newspaper(perc_pages_with_faces_per_decade, faces_raw_count_per_decad
     done['newspaper'] = newspaper_name
     done.sort_index(axis=0, ascending=True, inplace=True)
     done.to_csv(f'out/{newspaper_name}_data.csv')
+
 
 
 def loop_through_files(folderpath): 
@@ -111,6 +116,7 @@ def merged_df():
     return final_df
 
 
+
 def plotting(final_df):
     plt.figure(figsize=(15, 10))
     g = sns.relplot(data=final_df, kind="line", x="decade", y="Percentage", hue="newspaper")
@@ -121,11 +127,13 @@ def plotting(final_df):
     plt.show()
 
 
+
 def main():
     folderpath = "in/images/"
     loop_through_files(folderpath)
     final_df = merged_df()
     plotting(final_df)
+
 
 
 if __name__ == "__main__":

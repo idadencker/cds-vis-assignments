@@ -1,9 +1,9 @@
-opencv-python-headless
-numpy
-matplotlib
-tensorflow
-scikit-learn
-tqdm 
-scikit-optimize
+opencv-python-headless == 4.9.0.80
+numpy == 1.26.4
+matplotlib == 3.9.0
+tensorflow == 2.16.1
+scikit-learn == 1.4.2 
+tqdm == 4.66.4
+scikit-optimize == 0.10.1
 
 
