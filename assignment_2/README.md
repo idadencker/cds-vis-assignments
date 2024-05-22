@@ -8,7 +8,7 @@ The results from both methods are summarised and discussed.
 
 
 ## Data 
-The data used for classification is the ```CIFAR-10 dataset``` which consists of 60.000 32x32 colour images for 10 different classes, totaling 60.000 images. The dataset can be loaded using the cifar10.load_data function, and will produce a train/test split of 50.000 training images and 10.000 test images. More details on the data are available [here](https://www.cs.toronto.edu/~kriz/cifar.html)
+The data used for classification is the ```CIFAR-10 dataset``` which consists of 6000 32x32 colour images for 10 different classes, totaling 60.000 images. The dataset can be loaded using the cifar10.load_data function, and will produce a train/test split of 50.000 training images and 10.000 test images. More details on the data are available [here](https://www.cs.toronto.edu/~kriz/cifar.html)
 
 
 ## Repository overview 
