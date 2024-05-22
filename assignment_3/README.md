@@ -1,4 +1,4 @@
-# Transfer learning 
+# Transfer learning with pretrained CNN 
 
 
 ## Introduction
@@ -39,17 +39,16 @@ $ cd assignment_3
 ```python
 $ source setup.sh
 ```
-5) In run.sh uncomment the script wished to be executed
-6) in the terminal type what optimizer you want "adam" or "sgd" by running:
+5) in the terminal type what optimizer you want "adam" or "sgd" by running:
 ```python
 $ source run.sh -o "adam"
 ```
-A loss curve plot and a classification report will be saved in the out folder 
+3 loss curve plots and 3 classification reports will be saved in the out folder 
 
 
 ## Summary and discussion
 From looking at the performance of the models we see that the model implementing batch normalization using the adam optimizer performs best with an accuracy score of 76%. Inspecting the loss curve for the model we see that loss for both test and validation starts to flatten out for every epoch which is good. However, we also see signs of overfitting since the validation set has a higher loss and a lower accuracy. The implementation of the sgd optimizer is less prone to overfitting, however on the expense of slightly lower accuracy. <br>
 Multiple things can be implemented to prevent overfitting e.g. data augmentation. However the performance of the DA models don't achieve higher accuracy, though from looking at the plots they seem to have tackled the overfitting better. Altering images by horizontal flips and 90 degress rotations might confuse the model too much, perhaps since the images already are not of the best quality and therefore more sensitive to DA. <br>
 Epochs is set to be 10 and from looking at the plots it seems sufficient for most models, however raising the number of epochs could improve performance on some of the models. Batch size is set to 32 to help avoid overfitting on the small dataset and to reduce computational expenses. <br>
-Furthermore, hyperparameter tuning could be implemented to possibly better model performance, were parameters like batch size and number of epochs could be considered for tuning. However, since fitting the model with set hyperparameters is in itself quite time-consuming hyperparameter tuning is not implemented. <br>
-It should always be considered that the pre-trained VGG16 model is trained on certain images in certain categories. If e.g. scanned documents of say email, letter etc. is not included, the model will perform poorly even after fine-tuning. 
+Furthermore, hyperparameter tuning could be implemented to possibly better model performance, were parameters like batch size and number of epochs could be considered for tuning. However, since fitting the model with set hyperparameters is in itself quite time-consuming, hyperparameter tuning is not implemented. <br>
+It should always be considered that the pre-trained VGG16 model is trained on certain images from certain categories. If e.g. scanned documents of say email, letter etc. is not included, the model will perform poorly even after fine-tuning. 
